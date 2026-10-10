@@ -52,7 +52,7 @@ void rightToLeft(int delta_time, uint32_t led_value){
 void leftToRight(int delta_time, uint32_t led_value){
 	for(int i = 0; i < 32; i++){
 		*LEDS = led_value;
-		led_value = (led_value >> 01) | (led_value << 31);
+		led_value = (led_value >> 1) | (led_value << 31);
 		delay(delta_time/2);
 	}
 }
