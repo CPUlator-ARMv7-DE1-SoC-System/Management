@@ -58,11 +58,19 @@ The LED functions provide three basic operations:
 
 - **Clear LEDs:** Sets the LED output register to zero.
 - **Right-to-left animation:** Rotates the LED pattern in one direction.
-- **Left-to-right animation:** Rotates the pattern in the opposite direction.
+- **Left-to-right animation:** Rotates the LED pattern in the opposite direction.
 
 A busy-wait delay is used between successive updates to make the animation visible.
 
-The initial LED pattern is `0x00100010`. The rotation functions currently operate on a 32-bit value, allowing the experiment to use CPUlator's extended 32-LED view.
+The initial LED pattern is `0x00100010`. The rotation functions operate on a 32-bit value, allowing the experiment to use CPUlator's extended 32-LED view.
+
+**Challenges and approach**
+
+My main challenges were figuring out how to represent the initial LED pattern and how to rotate that pattern across all 32 LEDs.
+
+The memory view provided the key insight: hexadecimal notation offered a practical way to represent the LED pattern as a single value. Instead of thinking of the 32 LEDs as 32 separate elements, I began to see them as 32 individual bits within one 32-bit integer, with each bit corresponding to an LED.
+
+This changed how I approached the problem. By modifying the value with bitwise operations, I could change the LED pattern directly. I chose left and right shifts to demonstrate how the pattern moves across the LEDs. Other bitwise operations, such as AND, OR, and XOR, can produce different patterns and behaviors, offering further opportunities for experimentation. 
 
 ### 3. Seven-Segment Display
 
