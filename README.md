@@ -74,13 +74,21 @@ This changed how I approached the problem. By modifying the value with bitwise o
 
 ### 3. Seven-Segment Display
 
-The program converts an integer into the encoding required by the seven-segment displays.
+The program converts an integer into the encoding required to display decimal digits on the seven-segment displays.
 
 Each decimal digit is translated into a segment bit pattern, and successive digits are packed into a 32-bit value, with one byte allocated to each display position.
 
-The counter is incremented after an LED animation completes and is converted into its display representation whenever Switch 1 is enabled.
+The counter is incremented after an LED animation completes and converted into its display representation whenever Switch 1 is enabled.
 
 The current conversion supports up to four decimal digits. If the number exceeds four digits, only the four least significant decimal digits are displayed.
+
+**Challenges and approach**
+
+Building on what I learned from controlling the LEDs, I approached the seven-segment displays by examining how their states are represented in memory. This helped me understand how individual segments could be controlled through a numerical value.
+
+I found that a 32-bit value could represent four display positions, with each position occupying one byte. The next step was to determine the hexadecimal encoding required to illuminate the correct segments for each decimal digit and map those encodings to their respective display positions.
+
+Instead of treating the displays as separate physical components, I could now think of them as positions within a single value in memory. This allowed me to construct the displayed number by combining the individual digit encodings into one 32-bit value.
 
 ### 4. Input Handling and Device Coordination
 
