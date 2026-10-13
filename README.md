@@ -98,15 +98,39 @@ The counter is incremented after an LED animation completes and converted into i
 
 The current conversion supports up to four decimal digits. If the number exceeds four digits, only the four least significant decimal digits are displayed.
 
-<br>
-
 **Challenges and approach**
 
-Building on what I learned from controlling the LEDs, I approached the seven-segment displays by examining how their states are represented in memory. This helped me understand how individual segments could be controlled through a numerical value.
+Building on what I learned from controlling the LEDs, I approached the seven-segment displays by examining how their states are represented in memory. This helped me understand how individual segments could be controlled through numerical values.
 
-I found that a 32-bit value could represent four display positions, with each position occupying one byte. The next step was to determine the hexadecimal encoding required to illuminate the correct segments for each decimal digit and map those encodings to their respective display positions.
+I found that a 32-bit register can represent four display positions, with each position occupying one byte. The next step was to determine the hexadecimal encoding required to illuminate the correct segments for each decimal digit and map those encodings to their respective display positions.
 
-Instead of treating the displays as separate physical components, I could now think of them as positions within a single value in memory. This allowed me to construct the displayed number by combining the individual digit encodings into one 32-bit value.
+The DE1-SoC system provides eight seven-segment display positions, divided into two groups of four. The first group is controlled through the memory-mapped register at `0xFF200020`, while the second group is controlled through `0xFF200030`. Since each register holds 32 bits, each can store the segment encodings for four displays, with one byte allocated to each position.
+
+To keep the program relatively simple, I deliberately chose to access only `0xFF200020` and work with the first four display positions. This allowed me to focus on understanding the digit encodings and how multiple values can be packed into a single register without introducing the additional logic needed to update both groups of displays.
+
+Rather than treating the displays as separate physical components, I could now think of them as positions within a value in memory. This allowed me to construct the displayed number by combining the individual digit encodings into one 32-bit value.
+
+**Integer-to-segment conversion**
+
+The `castIntToSegmentNumber()` function converts an integer into a representation that can be written directly to the seven-segment display register. It does this by extracting each decimal digit, converting it into its corresponding segment encoding, and combining the encodings into a single 32-bit value.
+
+The conversion works as follows:
+
+1. **Initialize the result:** `segment_number` starts at zero. The variable `shift` tracks the position of the digit currently being processed.
+2. **Extract the last digit:** The modulo operator (`number % 10`) returns the last decimal digit of the number. For example, `1234 % 10` gives `4`.
+3. **Convert the digit:** `castIntDigitToSegmentDigit()` translates the decimal digit into the hexadecimal bit pattern required to illuminate the appropriate segments.
+4. **Position the encoding:** The expression `segment_digit << (shift * 8)` shifts the encoding into the correct byte position. Each display position occupies eight bits, so the shift increases by eight bits for each successive digit.
+5. **Combine the result:** The bitwise OR operator (`|=`) inserts the encoded digit into `segment_number`.
+6. **Continue with the next digit:** Integer division (`number /= 10`) removes the last decimal digit, allowing the function to process the next digit.
+
+The `do-while` loop ensures that at least one digit is processed, even when the input is zero. The condition `number > 0 && shift < 4` stops the conversion when all digits have been processed or when four display positions have been filled.
+
+For example, the integer `1234` is processed from right to left: first `4`, then `3`, then `2`, and finally `1`. Their segment encodings are placed into successive bytes, producing a single 32-bit value ready to be written to the display register.
+
+This approach connects decimal arithmetic with bitwise operations. Instead of converting the entire number at once, the function builds the hardware representation one digit at a time.
+
+> Note: <br>
+> The code handles up to four digits, but it does not explicitly discard digits beyond the fourth by calculating modulo 10,000. It simply stops processing once shift reaches four. For positive integers, the result therefore represents the four least significant decimal digits, as intended.
 
 <br>
 
