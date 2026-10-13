@@ -129,8 +129,7 @@ For example, the integer `1234` is processed from right to left: first `4`, then
 
 This approach connects decimal arithmetic with bitwise operations. Instead of converting the entire number at once, the function builds the hardware representation one digit at a time.
 
-> Note: <br>
-> The code handles up to four digits, but it does not explicitly discard digits beyond the fourth by calculating modulo 10,000. It simply stops processing once shift reaches four. For positive integers, the result therefore represents the four least significant decimal digits, as intended.
+*Note: The code handles up to four digits, but it does not explicitly discard digits beyond the fourth by calculating modulo 10,000. It simply stops processing once shift reaches four. For positive integers, the result therefore represents the four least significant decimal digits, as intended.*
 
 <br>
 
