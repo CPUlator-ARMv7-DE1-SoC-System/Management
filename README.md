@@ -80,11 +80,7 @@ The initial LED pattern is `0x00100010`. The rotation functions operate on a 32-
 
 **Challenges and approach**
 
-My main challenges were figuring out how to represent the initial LED pattern and how to rotate that pattern across all 32 LEDs.
-
-The memory view provided the key insight: hexadecimal notation offered a practical way to represent the LED pattern as a single value. Instead of thinking of the 32 LEDs as 32 separate elements, I began to see them as 32 individual bits within one 32-bit integer, with each bit corresponding to an LED.
-
-This changed how I approached the problem. By modifying the value with bitwise operations, I could change the LED pattern directly. I chose left and right shifts to demonstrate how the pattern moves across the LEDs. Other bitwise operations, such as AND, OR, and XOR, can produce different patterns and behaviors, offering further opportunities for experimentation. 
+My main challenge was representing the initial LED pattern and rotating it across all 32 LEDs. Examining the memory view helped me understand how a single 32-bit integer could represent the LED states, with each bit corresponding to an LED. Using hexadecimal notation and bitwise shifts, I could then move the pattern in either direction. Other operations, such as AND, OR, and XOR, offer further opportunities to experiment with different patterns and behaviors.
 
 <br>
 
@@ -135,11 +131,9 @@ This approach connects decimal arithmetic with bitwise operations. Instead of co
 
 ### 4. Input Handling and Device Coordination
 
-The main loop continuously reads the switch state and evaluates the current inputs.
+The main loop continuously reads the switch state and evaluates the current inputs. Switch 0 determines whether LED animation is permitted, while Switch 1 controls whether the counter is displayed. This demonstrates how separate device functions can be enabled independently through conditional logic.
 
-Switch 0 controls whether LED animation is permitted, while Switch 1 controls whether the counter is displayed. This provides a simple example of enabling different device functions independently.
-
-The implementation uses blocking animation functions, meaning that the main loop cannot process new input while an animation is running. This is an important limitation to consider when moving toward more responsive device management.
+The blocking nature of the animation functions limits how responsively the program can react to changing inputs, as discussed in the limitations section.
 
 <br>
 
