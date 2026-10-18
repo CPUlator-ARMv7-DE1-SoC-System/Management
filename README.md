@@ -1,4 +1,4 @@
-# 01 — Management
+# 01 - Management
 
 **Device control and coordination using switches, buttons, LEDs, and seven-segment displays.**
 
