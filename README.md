@@ -19,7 +19,7 @@ This serves as a starting point for exploring more elaborate device management s
 1. [Objectives](#objectives)
 2. [Control Scheme](#control-scheme)
 3. [Implementation Overview](#implementation)
-    * 3.1 [Memory-Mapped I/O](#memory-mapped-i/o)
+    * 3.1 [Memory-Mapped I/O](#memory-mapped-io)
 4. [Notes and Limitations](#notes-and-limitations)
 5. [Learning Outcomes](#learning-outcomes)
 6. [Possible Extensions](#possible-extensions)
