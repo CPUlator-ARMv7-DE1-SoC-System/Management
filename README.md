@@ -20,6 +20,9 @@ This serves as a starting point for exploring more elaborate device management s
 2. [Control Scheme](#control-scheme)
 3. [Implementation Overview](#implementation)
     * 3.1 [Memory-Mapped I/O](#memory-mapped-io)
+    * 3.2 [LED Control](#led-control)
+    * 3.3 [Seven-Segment Display](#seven-segment-display)
+    * 3.4 [Input Handling and Device Coordination](#input-handling-and-device-coordination)
 4. [Notes and Limitations](#notes-and-limitations)
 5. [Learning Outcomes](#learning-outcomes)
 6. [Possible Extensions](#possible-extensions)
@@ -78,7 +81,7 @@ However, this is only a simple software delay, not a precise timing mechanism. I
 
 <br>
 
-### 2. LED Control
+### LED Control
 
 The LED functions provide three basic operations:
 
@@ -98,7 +101,7 @@ My main challenge was representing the initial LED pattern and rotating it acros
 
 <br>
 
-### 3. Seven-Segment Display
+### Seven-Segment Display
 
 The program converts an integer into the encoding required to display decimal digits on the seven-segment displays.
 
@@ -143,7 +146,7 @@ This approach connects decimal arithmetic with bitwise operations. Instead of co
 
 <br>
 
-### 4. Input Handling and Device Coordination
+### Input Handling and Device Coordination
 
 The main loop continuously reads the switch state and evaluates the current inputs. Switch 0 determines whether LED animation is permitted, while Switch 1 controls whether the counter is displayed. This demonstrates how separate device functions can be enabled independently through conditional logic.
 
