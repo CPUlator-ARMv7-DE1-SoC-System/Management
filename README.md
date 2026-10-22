@@ -10,7 +10,21 @@ This experiment explores the basic coordination of multiple I/O devices in the C
 
 The goal is to use switches and push buttons as control inputs to determine which devices are active and how they behave. The experiment combines LED animations with a seven-segment display to demonstrate how multiple peripherals can be controlled within a single C program.
 
-This serves as a starting point for exploring more elaborate device management strategies in subsequent experiments. 
+This serves as a starting point for exploring more elaborate device management strategies in subsequent experiments.
+
+---
+
+### Table of contents
+
+1. [Objectives](#objectives)
+2. [Control Scheme](#control-scheme)
+3. [Implementation Overview](#implementation)
+    * 3.1 [Memory-Mapped I/O](#memory-mapped-i/o)
+4. [Notes and Limitations](#notes-and-limitations)
+5. [Learning Outcomes](#learning-outcomes)
+6. [Possible Extensions](#possible-extensions)
+
+---
 
 <br>
 
@@ -46,7 +60,7 @@ The LED animation and counter share the same program state, while the switches d
 
 ## Implementation
 
-### 1. Memory-Mapped I/O
+### Memory-Mapped I/O
 
 The program interacts with the simulated hardware by accessing memory-mapped peripheral registers.
 
